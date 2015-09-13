@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script type="text/javascript">
+	function BowlingScore(str)
+	{
+		var finalScore = 0;
+		var frameScore = 0;
+		var arrBallScores;
+		var currBallScore1 = 0, currBallScore2 = 0;
+		var currFrame = 0;
+		
+		arrBallScores = str.split(",");
+
+		for(currFrame = 0; currFrame < 10; currFrame++)
+		{
+			if(arrBallScores.length > 0)
+			{
+				frameScore = 0;
+				currBallScore1 = Number(arrBallScores.shift());
+				frameScore += currBallScore1;
+
+				if(currBallScore1 == 10)
+				{
+					if(arrBallScores.length >= 1)
+					{
+						frameScore += Number(arrBallScores[0]);
+						if(arrBallScores.length > 1)
+						{
+							frameScore += Number(arrBallScores[1]);
+						}
+					}
+				}
+				else
+				{
+					if(arrBallScores.length > 0)
+					{
+						currBallScore2 = Number(arrBallScores.shift());
+						frameScore += currBallScore2;
+						if(currBallScore2 == 10)
+						{
+							if(arrBallScores.length >= 1)
+							{
+								frameScore += Number(arrBallScores[0]);
+								if(arrBallScores.length > 1)
+								{
+									frameScore += Number(arrBallScores[1]);
+								}
+							}							
+						}
+						else if (currBallScore1 + currBallScore2 == 10)
+						{
+							if(arrBallScores.length >= 1)
+							{
+								frameScore += Number(arrBallScores[0]);
+							}
+						}
+						else
+						{}
+					}
+				}
+
+				finalScore += frameScore;
+			}
+			else
+			{
+				break;
+			}		
+		}
+
+		return finalScore;
+
+	}
+
+	function DisplayScore()
+	{
+		var inputElem = document.getElementById('pins');
+		var inputStr = inputElem.value;
+		console.log(inputStr);
+		var finalScore = BowlingScore(inputStr);
+		var resultElem = document.getElementById('Result');
+		resultElem.innerHTML = finalScore;
+
+	}
+	</script>
+</head>
+<body>
+	<button onClick="DisplayScore()">Score</button>
+	<input name="pins" id="pins" type="text">
+	<div id="Result"></div>
+	<div>Examples
+
+10,10,10,10,10,10,10,10,10,10,10,10   => 300<br>
+
+1,2,3,4,5,5   => 20<br>
+
+9,1,10,8,0,2  => 48<br>
+
+10,0,0,9,1,0,0,8,2,0,0,7,3,0,0,6,4,0,0  => 50</div>
+</body>
+</html>
